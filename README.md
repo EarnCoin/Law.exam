@@ -1,1 +1,1 @@
-# LawExam.exam
+# Law.exam
