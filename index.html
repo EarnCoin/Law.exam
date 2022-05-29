@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+    <head><title>司律一試線上測驗</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta property="og:title" content="司律一試線上測驗">
+        <meta property="og:description" content="以司律一試考古題為基礎，提供線上題庫練習">
+        <meta property="og:type" content="website">
+        
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <style>
+        input[type='radio'],input[type='checkbox'] { transform: scale(2); }
+
+		@media only screen and (max-width: 600px) {
+			.navbar-brand {
+				width: 300px;
+				overflow:hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+		}
+		@media only screen and (max-width: 1200px) {
+			.row{
+				margin-left:10px !important; 
+			}
+		
+		}
+			
+		#qa-quiz, #qa-answer, #qa-result{
+			text-align:justify;
+		}
+		#qa-quiz{
+			text-indent : -1.1em;
+		}
+
+        </style>
+    </head>
+    <body>
+		
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+		<a class="navbar-brand" href="#">司律一試[年]</a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+      
+
+		  <div class="container">
+            <div class="row">
+               
+                <h1 id="qa-quiz" class="col-md-12"></h1>
+                <div id="qa-answer" class="col-md-12" style="font-size: 20pt;"></div>
+                <h1 id="qa-result" class="col-md-12" style="color: red;"></h1>
+                <div id="detail" class="col-md-12">
+                    <div id="helper" class="col-md-8 col-sm-12 col-xs-12">
+                        <div class="btn-group btn-group-justified">
+                            <a class="btn btn-primary btn-lg qa-previous" href="#">
+                                上一題
+                            </a>
+                            <a class="btn btn-primary btn-lg qa-jump" href="#">
+                                跳題
+                            </a>                            
+							<a class="btn btn-primary btn-lg qa-random" href="#">
+                                隨機
+                            </a>
+                            <a class="btn btn-primary btn-lg qa-next" href="#">
+                                下一題
+                            </a>
+                        </div>
+                        <div class="col-md-12" id="qa-status"></div>
+                    </div>
+ 
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <a href="https://github.com/lagendre/LayerExam" target="_blank">網站原始碼</a> |
+                資料來源： <a href="https://wwwq.moex.gov.tw/exam/wFrmExamQandASearch.aspx" target="_blank">考選部考畢試題查詢平臺</a>
+            </div>
+        </div>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script>
+        var currentIndex = 0, qa = [], total = 0;
+		let menu ="";
+        $(function() {
+		for (let yr=110;yr>102;yr--){
+			menu += '<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">' +
+					 yr+ '<span class="caret"></span></a>'+
+					'<ul class="dropdown-menu">'+
+					'<li><a href="#">'+yr+'綜合法學(一)(憲法、行政法、國際公法、國際私法)</a></li>'+
+					'<li><a href="#">'+yr+'綜合法學(二)(民法、民事訴訟法)</a></li>'+
+					'<li><a href="#">'+yr+'綜合法學(二)(公司法、保險法、票據法、證券交易法、強制執行法、法學英文)</a></li>'+
+					'<li><a href="#">'+yr+'綜合法學(一)(刑法、刑事訴訟法、法律倫理)</a></li>'+
+					'</ul></li>';
+		}
+		for (let yr=102;yr>99;yr--){
+			menu += '<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">' +
+					 yr+ '<span class="caret"></span></a>'+
+					'<ul class="dropdown-menu">'+
+					'<li><a href="#">'+yr+'司-綜合法學(一)(憲法、行政法、國際公法、國際私法)</a></li>'+
+					'<li><a href="#">'+yr+'律-綜合法學(一)(憲法、行政法、國際公法、國際私法)</a></li>'+
+					'<li><a href="#">'+yr+'司-綜合法學(二)(民法、民事訴訟法)</a></li>'+
+					'<li><a href="#">'+yr+'律-綜合法學(二)(民法、民事訴訟法)</a></li>'+
+					'<li><a href="#">'+yr+'司-綜合法學(二)(公司法、保險法、票據法、海商法、證券交易法、法學英文)</a></li>'+
+					'<li><a href="#">'+yr+'律-綜合法學(二)(公司法、保險法、票據法、海商法、證券交易法、法學英文)</a></li>'+
+					'<li><a href="#">'+yr+'司-綜合法學(一)(刑法、刑事訴訟法、法律倫理)</a></li>'+
+					'<li><a href="#">'+yr+'律-綜合法學(一)(刑法、刑事訴訟法、法律倫理)</a></li>'+
+					'</ul></li>';
+		}
+		$(".navbar-nav").html(menu);
+		
+		//selectquiz( $(this).text() );
+
+		//$("ul .dropdown-menu li:nth-child("+(Math.floor(Math.random() * $('.dropdown-menu li').length )+1)+")").addClass("active");
+			
+		//selectquiz( $("ul .dropdown-menu li").find(".active").text() );
+		$('#qa-quiz').html("請選擇年度及考試!!");
+		$("#helper").hide();
+		
+		$(".dropdown-menu a").on("click", function(){
+			
+			//$("ul .dropdown-menu li").find(".active").removeClass("active");
+			//$(this).addClass("active");
+			$("#helper").show();
+			
+			selectquiz( $(this).text() );
+		});
+	
+
+          $('.qa-previous').click(function() {
+            currentIndex -= 1;
+            if(currentIndex < 0) {
+              currentIndex = total - 1;
+            }
+            showQuiz();
+            return false;
+          });
+          $('.qa-next').click(function() {
+            currentIndex += 1;
+            if(currentIndex >= total) {
+              currentIndex = 0;
+            }
+            showQuiz();
+            return false;
+          });
+          $('.qa-jump').click(function() {
+            let inputIndex = parseInt( window.prompt('輸入 1-' + total + ' 數字') );
+			if (!isNaN(inputIndex))
+				currentIndex = inputIndex -1;
+            showQuiz();
+            return false;
+          });
+		  $('.qa-random').click(function() {
+
+			currentIndex = Math.floor(Math.random() * qa.length);
+            showQuiz();
+            return false;
+          });
+	
+        })
+		
+		function selectquiz( txt ){
+		
+		$('.navbar-brand').text( txt );
+		
+			txt = txt.slice(0,3)+ "/" + txt;
+		
+		
+			qa = [];
+			
+			$.ajaxSettings.async = false;
+			
+			$.get( txt+'.txt', function(data) {
+			
+				let line = data.split('\n');
+				let quiz, chA, chB, chC, chD, chE;
+				let checkpoint = false;
+				for ( let i=0;i < line.length;i++ ){
+					if (checkpoint){
+						chA="A."; chB="B."; chC="C."; chD="D."; chE="E.";
+							
+								if (!isNaN(parseFloat(line[i].replace(/\r/g, '')[0]))){
+									if ( (//g).test(line[i+1]) ){ //choiceA.
+										
+										quiz = line[i];
+										i++;
+									}
+									else{
+										quiz="";
+										for ( let j=0;j<5;j++ ){										
+											if ( (//g).test(line[i+j])){
+											 i= i+j;
+											 break;
+											}		
+											quiz += line[i+j];
+										}
+									}
+									
+
+										if (( (//g).test(line[i]) )){ //choice D in  line
+											chD += line[i].slice( line[i].indexOf('')+1, line[i].length);
+											chC += line[i].slice(line[i].indexOf('')+1 , line[i].indexOf('') );
+											chB += line[i].slice(line[i].indexOf('')+1 , line[i].indexOf('') );
+											chA += line[i].slice(line[i].indexOf('')+1 , line[i].indexOf('') );
+											chE = "";
+											//i++;
+										}
+										else if (( (//g).test(line[i]) )) { //choice B in  line
+											chB += line[i].slice(line[i].indexOf('')+1 , line[i].length );
+											chA += line[i].slice(line[i].indexOf('')+1 , line[i].indexOf('') );
+											chD += line[i+1].slice( line[i+1].indexOf('')+1, line[i+1].length);
+											chC += line[i+1].slice(line[i+1].indexOf('')+1 , line[i+1].indexOf('') );
+											chE = "";
+											i=i+1;
+										}
+										else{
+														
+											
+												
+											chA += line[i].slice(1, line[i].length);
+											for ( let j=1;j<5;j++ ){
+												//line[i+j]= line[i+j].replace(/\r/g, '');
+												if (  line[i+j].charAt(0)===''){
+													i= i+j;
+													break;
+												}		
+											chA += line[i+j];
+											}
+											if ((//g).test(line[i]) ) { //choice C in  line
+											
+												chC += line[i].slice(line[i].indexOf('')+1 , line[i].length );
+												chB += line[i].slice(1 , line[i].indexOf('') );
+												for ( let j=1;j<5;j++ ){	
+													if (  line[i+j].charAt(0)===''){
+														i= i+j;
+													break;
+													}		
+												}
+											}
+											else{
+												chB += line[i].slice(1, line[i].length);
+												for ( let j=1;j<5;j++ ){
+													//line[i+j]= line[i+j].replace(/\r/g, '');
+													if ( line[i+j].charAt(0)==='' ){
+													i= i+j;
+													break;
+												}		
+												chB += line[i+j];
+											}
+											
+												chC += line[i].slice(1, line[i].length);
+												for ( let j=1;j<5;j++ ){	
+												//line[i+j]= line[i+j].replace(/\r/g, '');
+												if (  line[i+j].charAt(0)===''){
+													i= i+j;
+													break;
+												}		
+												chC += line[i+j];
+												}
+											}
+								
+												
+											chD += line[i].slice(1, line[i].length);
+											for ( let j=1;j<3;j++ ){	
+												//line[i+j]= line[i+j].replace(/\r/g, '');
+												
+												if (  parseInt(line[i+j].slice(0, 2))==(qa.length+2)){
+													i= i+j-1;
+													chE = "";
+													break;
+												}
+												else if (  line[i+j].charAt(0)===''){
+													i= i+j;
+													chE += line[i].slice(1, line[i].length);
+													//i++;
+													break;
+												}
+												else{
+													chE="";
+												}
+												
+												chD += line[i+j];
+											}
+											//i++;
+			
+ 										}
+								}
+								else{
+									//console.log(line[i]);
+									continue;
+								}
+							
+								qa.push({
+								"quiz": quiz,
+								"options": {
+								"A": chA,
+								"B": chB,
+								"C": chC,
+								"D": chD,
+								"E": chE
+								},
+								"answer":null,
+								"choice":1
+								});						
+					}
+					else if ( line[i].indexOf('禁止使用電子計算器')!=-1 ){
+						checkpoint= true;
+					}
+					else{
+						//console.log(line[i]);
+					}
+				
+				}//end of for loop	
+				
+			}, 'text');
+
+			$.get( txt+'ANS.txt', function(data) {
+					
+				let line = data.split('\r');
+				
+				let index =0, ansArray=[];
+				
+				for ( let i=0;i<line.length;i++ ){
+				
+					if ( /[A-E]/g.test(line[i]) || line[i]==='#'){
+						
+						line[i] = line[i].replace(/\n/g, '')
+						
+						if (line[i].length!=1){
+						
+							ansArray=[];
+							
+							qa[index].choice= 2;
+							
+							for (var j=0; j<line[i].length; j++){
+
+								ansArray.push( line[i][j] );
+								
+							}
+							
+							qa[index].answer = ansArray;
+							
+						}
+						else{
+							
+							qa[index].answer= line[i];
+						}
+						
+						index++;
+
+						if ( index == qa.length)
+							return;
+					}
+					else{
+						//console.log(line[i]);
+					}
+			
+				}//end of for loop	
+			}, 'text');
+
+				$.ajaxSettings.async = true;
+				
+				total = qa.length;
+				
+				currentIndex = Math.floor(Math.random() * qa.length);
+				
+				showQuiz();
+			
+				
+			
+		}
+		
+        function showQuiz() {
+			
+          if (currentIndex > qa.length)
+			currentIndex=0;
+			
+		  $('#qa-result').html('');
+          $('#qa-quiz').html(qa[currentIndex].quiz);
+          var answers = '';
+		  
+		  if (qa[currentIndex].choice==1){
+			for(k in qa[currentIndex].options) {
+				if( qa[currentIndex].options[k].length!=0 )
+				answers += '<label class="radio-inline"><input name="answer" class="qa-options" type="radio" value="' + k + '" />' +  qa[currentIndex].options[k] + '</label><br />';
+			}
+		  }
+		  else{
+			for(k in qa[currentIndex].options) {
+				if( qa[currentIndex].options[k].length!=0 )
+				answers += '<label class="checkbox-inline"><input name="answer" class="qa-multi-options" type="checkbox" value="' + k + '" />' +  qa[currentIndex].options[k] + '</label><br />';
+			}
+			
+			answers += '<button onclick="multichoice()">答題</button>';
+			
+		  }
+		  
+		  
+          $('#qa-answer').html(answers);
+		  
+          $('input.qa-options').change(function() {
+		  
+            var selected = $(this).val();
+            if(selected == qa[currentIndex].answer) {
+              $('#qa-result').html("你答對了！");
+            }else if( qa[currentIndex].answer ==='#' ){
+				$('#qa-result').html("本題一律給分！");
+			}
+			else {
+              $('#qa-result').html("你答錯了！正確答案應該是 -> <br>" + qa[currentIndex].options[qa[currentIndex].answer]  );
+            }
+          });
+		  
+
+		  
+          $('div#qa-status').html('第 ' + (currentIndex + 1) + ' 題 / 共 ' + total + ' 題');
+        }
+		
+		function multichoice() {
+		
+			var userAns = [];
+			var checkboxes = document.getElementsByName('answer');
+			
+			for(let i = 0;i< checkboxes.length;  i++ )
+			{
+				if(checkboxes[i].checked){  
+					userAns.push( checkboxes[i].value );
+				}
+			}
+	
+				if( JSON.stringify(userAns)!=JSON.stringify(qa[currentIndex].answer) ) {
+					let theAns="";
+					qa[currentIndex].answer.forEach(function(value){
+						theAns +=  "<br>" + qa[currentIndex].options[value] ;
+					});
+					
+					$('#qa-result').html("你答錯了！正確答案應該是 -> " + theAns );
+				}
+				else{
+					$('#qa-result').html("你答對了！");
+				}		
+          }
+
+        </script>
+    </body>
+</html>
