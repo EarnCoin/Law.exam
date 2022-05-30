@@ -6,7 +6,7 @@
         <meta property="og:title" content="司律一試線上測驗">
         <meta property="og:description" content="以司律一試考古題為基礎，提供線上題庫練習">
         <meta property="og:type" content="website">
-        
+        <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <style>
         input[type='radio'],input[type='checkbox'] { transform: scale(2); }
@@ -25,6 +25,15 @@
 			}
 		
 		}
+		@media only screen and (min-width: 1050px) {
+			.navbar-brand {
+				width: 300px;
+				overflow:hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+		}
+		1053
 			
 		#qa-quiz, #qa-answer, #qa-result{
 			text-align:justify;
@@ -69,7 +78,7 @@
                     <div id="helper" class="col-md-8 col-sm-12 col-xs-12">
                         <div class="btn-group btn-group-justified">
                             <a class="btn btn-primary btn-lg qa-previous" href="#">
-                                上一題
+                                上題
                             </a>
                             <a class="btn btn-primary btn-lg qa-jump" href="#">
                                 跳題
@@ -78,7 +87,7 @@
                                 隨機
                             </a>
                             <a class="btn btn-primary btn-lg qa-next" href="#">
-                                下一題
+                                下題
                             </a>
                         </div>
                         <div class="col-md-12" id="qa-status"></div>
@@ -87,7 +96,7 @@
                 </div>
             </div>
             <div style="text-align: center;">
-                <a href="https://github.com/lagendre/LayerExam" target="_blank">網站原始碼</a> |
+                <a href="https://github.com/lagendre/law.exam" target="_blank">網站原始碼</a> |
                 資料來源： <a href="https://wwwq.moex.gov.tw/exam/wFrmExamQandASearch.aspx" target="_blank">考選部考畢試題查詢平臺</a>
             </div>
         </div>
@@ -123,18 +132,12 @@
 		}
 		$(".navbar-nav").html(menu);
 		
-		//selectquiz( $(this).text() );
-
-		//$("ul .dropdown-menu li:nth-child("+(Math.floor(Math.random() * $('.dropdown-menu li').length )+1)+")").addClass("active");
-			
-		//selectquiz( $("ul .dropdown-menu li").find(".active").text() );
+	
 		$('#qa-quiz').html("請選擇年度及考試!!");
 		$("#helper").hide();
 		
 		$(".dropdown-menu a").on("click", function(){
 			
-			//$("ul .dropdown-menu li").find(".active").removeClass("active");
-			//$(this).addClass("active");
 			$("#helper").show();
 			
 			selectquiz( $(this).text() );
