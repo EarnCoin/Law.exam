@@ -415,6 +415,7 @@
 			else {
               $('#qa-result').html("你答錯了！正確答案應該是 -> <br>" + qa[currentIndex].options[qa[currentIndex].answer]  );
             }
+		window.scrollTo(0, document.body.scrollHeight);
           });
 		  
 
@@ -444,7 +445,8 @@
 				}
 				else{
 					$('#qa-result').html("你答對了！");
-				}		
+				}
+			window.scrollTo(0, document.body.scrollHeight);
           }
 
         </script>
