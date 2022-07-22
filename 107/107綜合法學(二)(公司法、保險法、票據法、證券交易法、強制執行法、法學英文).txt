@@ -387,11 +387,9 @@ B 保險公司自得對乙為主張
 69 To ensure all parties involved in civil proceedings are fairly and timely informed, a set of rules is created to determine how to properly deliver and exchange court papers and documents to and among the parties. Such rules are rules of  .
 circulation	communication	notification	service
 70 In a civil case, which of the following pairings of action and actor is incorrect?
-
-summary judgement	judge
-complaint	plaintiff
-
+summary judgement judge
 judgment notwithstanding the verdict	jury
+complaint plaintiff
 answer	defendant
 
 
