@@ -154,7 +154,7 @@
 				let checkpoint = false;
 				for ( let i=0;i < line.length;i++ ){
 					if (checkpoint){
-						chA="A."; chB="B."; chC="C."; chD="D."; chE="E.";
+						chA="A. "; chB="B. "; chC="C. "; chD="D."; chE="E. ";
 							
 								if (!isNaN(parseFloat(line[i].replace(/\r/g, '')[0]))){
 									if ( (//g).test(line[i+1]) ){ //choiceA.
