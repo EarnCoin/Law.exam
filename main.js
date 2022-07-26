@@ -164,7 +164,7 @@
 									}
 									else{
 										quiz="";
-										for ( let j=0;j<5;j++ ){										
+										for ( let j=0; j<7; j++ ){										
 											if ( (//g).test(line[i+j])){
 											 i= i+j;
 											 break;
