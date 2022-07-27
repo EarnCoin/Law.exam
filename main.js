@@ -145,9 +145,9 @@
 		
 			qa = [];
 			
-			$.ajaxSettings.async = false;
+			//$.ajaxSettings.async = false;
 			
-			$.get( txt+'.txt', function(data) {
+			$.when( $.get( txt+'.txt', function(data) {
 			
 				let line = data.split('\n');
 				let quiz, chA, chB, chC, chD, chE;
@@ -295,9 +295,9 @@
 				
 				}//end of for loop	
 				
-			}, 'text');
+			}, 'text') ).then(function(){
 
-			$.get( txt+'ANS.txt', function(data) {
+				$.get( txt+'ANS.txt', function(data) {
 					sel_cnt=0;
 				
 				let line = data.split('\r');
@@ -341,16 +341,16 @@
 			
 				}//end of for loop	
 			}, 'text');
-
-				$.ajaxSettings.async = true;
-				
 				total = qa.length;
 				
 				currentIndex = 0; //Math.floor(Math.random() * qa.length);
 				
 				showQuiz();
-			
+			});
+
+				//$.ajaxSettings.async = true;
 				
+			
 			
 		}
 		
