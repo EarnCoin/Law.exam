@@ -2,7 +2,7 @@
  
 		let menu ="";
         $(function() {
-		for (let yr=110;yr>99;yr--){ //
+		for (let yr=110;yr>99;yr--){ 
 			menu += '<li class="nav-item dropdown">' +
 					'<div class="nav-link dropdown-toggle"  id="'+ yr+'" role="button" data-bs-toggle="dropdown" aria-expanded="false">'+
 					 yr + '</div>'+
@@ -36,12 +36,6 @@
 		$('#qa-quiz').html("請選擇年度及考試!!");
 		$("#helper").hide();
 		
-		$(".dropdown-item").click(function() {
-			$("#helper").show();
-			
-			selectquiz( $(this).text() );
-			
-		});
 		
 		 $('.qa-previous').click(qa_pvs);
          $('.qa-next').click(qa_nxt);
@@ -61,7 +55,6 @@
 				if (e.which=='114'||e.which=='82'){
 					qa_rnd();
 				}
-				//console.log(e);
 		});		  
 				
 
@@ -98,13 +91,13 @@
           }
 	
 			$(".nav a").on("click", function(){
+				
+				$("#helper").show();
 		
 			$(".nav").find(".active").removeClass("active");
 			$(this).addClass("active");
 			
 			if (  $(this).text() ==='複習錯題'){
-				//sel_cnt=0; qa=[];
-				
 		
 				getAllquiz(function(qadata, selcount){
 					
@@ -141,11 +134,13 @@
 		$('.navbar-brand').text( txt );
 		
 			txt = txt.slice(0,3)+ "/" + txt;
-	
-		
-			qa = [];
+
 			
-			$.ajaxSettings.async = false;
+		
+			
+			$('#qa-quiz').html('<div class="spinner-border text-primary"></div>');
+			
+			qa =[];
 			
 			 $.get( txt+'.txt', function(data) {
 			
@@ -202,7 +197,7 @@
 												
 											chA += line[i].slice(1, line[i].length);
 											for ( let j=1;j<5;j++ ){
-												//line[i+j]= line[i+j].replace(/\r/g, '');
+												
 												if (  line[i+j].charAt(0)===''){
 													i= i+j;
 													break;
@@ -233,7 +228,7 @@
 											
 												chC += line[i].slice(1, line[i].length);
 												for ( let j=1;j<5;j++ ){	
-												//line[i+j]= line[i+j].replace(/\r/g, '');
+												
 												if (  line[i+j].charAt(0)===''){
 													i= i+j;
 													break;
@@ -245,7 +240,6 @@
 												
 											chD += line[i].slice(1, line[i].length);
 											for ( let j=1;j<3;j++ ){	
-												//line[i+j]= line[i+j].replace(/\r/g, '');
 												
 												if (  parseInt(line[i+j].slice(0, 2))==(qa.length+2)){
 													i= i+j-1;
@@ -264,12 +258,11 @@
 												
 												chD += line[i+j];
 											}
-											//i++;
+											
 			
  										}
 								}
 								else{
-									//console.log(line[i]);
 									continue;
 								}
 							
@@ -295,60 +288,64 @@
 				
 				}//end of for loop	
 				
-			}, 'text');
-
-				$.get( txt+'ANS.txt', function(data) {
+			}, 'text').done(function() {
+				
+				 $.get( txt+'ANS.txt', function(data) {
 					sel_cnt=0;
-				
-				let line = data.split('\r');
-				
-				let index =0, ansArray=[];
-				
-				for ( let i=0;i<line.length;i++ ){
-				
-					if ( /[A-E]/g.test(line[i]) || line[i]==='#'){
-						
-						line[i] = line[i].replace(/\n/g, '')
-						
-						if (line[i].length!=1){
-						
-							ansArray=[];
+					
+					let line = data.split('\r');
+					
+					let index =0, ansArray=[];
+					
+					for ( let i=0;i<line.length;i++ ){
+					
+						if ( /[A-E]/g.test(line[i]) || line[i]==='#'){
 							
-							qa[index].choice= 2;
+							line[i] = line[i].replace(/\n/g, '')
 							
-							for (var j=0; j<line[i].length; j++){
+							if (line[i].length!=1){
+							
+								ansArray=[];
+								
+								qa[index].choice= 2;
+								
+								for (var j=0; j<line[i].length; j++){
 
-								ansArray.push( line[i][j] );
+									ansArray.push( line[i][j] );
+									
+								}
+								
+								qa[index].answer = ansArray;
 								
 							}
+							else{
+								
+								qa[index].answer= line[i];
+								
+								sel_cnt++;
+							}
 							
-							qa[index].answer = ansArray;
-							
-						}
-						else{
-							
-							qa[index].answer= line[i];
-							
-							sel_cnt++;
+							index++;
+
+							if ( index == qa.length)
+								return;
 						}
 						
-						index++;
-
-						if ( index == qa.length)
-							return;
-					}
+				
+					}//end of for loop	
+				}, 'text').done(function() {
 					
+							total = qa.length;
+					
+							currentIndex = Math.floor(Math.random() * qa.length);  //= 0;
+					
+							showQuiz();
+				
+				});
 			
-				}//end of for loop	
-			}, 'text');
-			
-				$.ajaxSettings.async = true;
+			});
+
 				
-				total = qa.length;
-				
-				currentIndex = 0; //Math.floor(Math.random() * qa.length);
-				
-				showQuiz();
 			
 		}
 		
@@ -388,7 +385,7 @@
 		  
             var selected = $(this).val();
             if(selected == qa[currentIndex].answer) {
-              //$('#qa-result').html("你答對了！");
+             
 			     $('#qa-result').css({'color':'green'});
 		
 				$('#qa-result').html('答對&#128077;' );
@@ -445,8 +442,7 @@
 																'color': 'red'});
 					});
 							
-	
-				//unicode cry face symbol:&#128077;		
+		
 				$('#qa-result').css({'color':'red'});				
 				$('#qa-result').html('答錯了&#128557;'  );
            
