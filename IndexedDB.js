@@ -125,9 +125,12 @@ function getAllquiz(callback) {
 				
 				 qadata.push(quiz);
 				
-				if (Object.keys(quiz.answer).length==1)
-					selcount++;
-                		// continue next record
+				if (quiz.answer){
+					if (Object.keys(quiz.answer).length==1)
+						selcount++;
+				
+				}
+					// continue next record
                		 	cursor.continue();
             		}
 			else{
