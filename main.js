@@ -9,22 +9,22 @@
 					 '<ul class="dropdown-menu" aria-labelledby="'+ yr +'">';
 			if (yr>102){
 				menu += 
+					'<li><a class="dropdown-item" href="#">'+yr+'綜合法學(一)(刑法、刑事訴訟法、法律倫理)</a></li>'+
 					'<li><a class="dropdown-item" href="#">'+yr+'綜合法學(一)(憲法、行政法、國際公法、國際私法)</a></li>'+
 					'<li><a class="dropdown-item" href="#">'+yr+'綜合法學(二)(民法、民事訴訟法)</a></li>'+
-					'<li><a class="dropdown-item" href="#">'+yr+'綜合法學(二)(公司法、保險法、票據法、證券交易法、強制執行法、法學英文)</a></li>'+
-					'<li><a class="dropdown-item" href="#">'+yr+'綜合法學(一)(刑法、刑事訴訟法、法律倫理)</a></li>'+
+					'<li><a class="dropdown-item" href="#">'+yr+'綜合法學(二)(公司法、保險法、票據法、證券交易法、強制執行法、法學英文)</a></li>'+			
 					'</ul></li>';
 			}
 			else{
 				menu += 
+					'<li><a class="dropdown-item" href="#">'+yr+'司-綜合法學(一)(刑法、刑事訴訟法、法律倫理)</a></li>'+
+					'<li><a class="dropdown-item" href="#">'+yr+'律-綜合法學(一)(刑法、刑事訴訟法、法律倫理)</a></li>'+
 					'<li><a class="dropdown-item" href="#">'+yr+'司-綜合法學(一)(憲法、行政法、國際公法、國際私法)</a></li>'+
 					'<li><a class="dropdown-item" href="#">'+yr+'律-綜合法學(一)(憲法、行政法、國際公法、國際私法)</a></li>'+
 					'<li><a class="dropdown-item" href="#">'+yr+'司-綜合法學(二)(民法、民事訴訟法)</a></li>'+
 					'<li><a class="dropdown-item" href="#">'+yr+'律-綜合法學(二)(民法、民事訴訟法)</a></li>'+
 					'<li><a class="dropdown-item" href="#">'+yr+'司-綜合法學(二)(公司法、保險法、票據法、海商法、證券交易法、法學英文)</a></li>'+
 					'<li><a class="dropdown-item" href="#">'+yr+'律-綜合法學(二)(公司法、保險法、票據法、海商法、證券交易法、法學英文)</a></li>'+
-					'<li><a class="dropdown-item" href="#">'+yr+'司-綜合法學(一)(刑法、刑事訴訟法、法律倫理)</a></li>'+
-					'<li><a class="dropdown-item" href="#">'+yr+'律-綜合法學(一)(刑法、刑事訴訟法、法律倫理)</a></li>'+
 					'</ul></li>';
 			}
 			
