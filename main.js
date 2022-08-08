@@ -2,7 +2,8 @@
  
 		let menu ="";
         $(function() {
-		for (let yr=110;yr>99;yr--){ 
+		let yr=111; //set year 
+		for (;yr>99;yr--){ 
 			menu += '<li class="nav-item dropdown">' +
 					'<div class="nav-link dropdown-toggle"  id="'+ yr+'" role="button" data-bs-toggle="dropdown" aria-expanded="false">'+
 					 yr + '</div>'+
