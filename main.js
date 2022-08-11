@@ -124,6 +124,8 @@
 			else{
 				selectquiz( $(this).text() );	
 			}
+				//auto navbar collapse
+				$('.navbar-toggler').click();
 			});
         })
 		
