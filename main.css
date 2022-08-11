@@ -9,7 +9,10 @@
 	}
 		
 	#qa-quiz, #qa-answer, #qa-result{
-			text-align:justify;
+		word-wrap: break-word; 
+		white-space: pre-wrap; 
+		text-align: justify; 
+		text-justify:inter-ideograph;
 	}
 	
 	.btn-primary {
